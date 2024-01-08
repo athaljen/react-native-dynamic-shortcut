@@ -1,4 +1,4 @@
-var ReactAppShortcuts = require('react-native').NativeModules.ReactAppShortcuts;
+var ReactAppShortcuts = require("react-native").NativeModules.ReactAppShortcuts;
 
 module.exports = {
   /**
@@ -8,28 +8,30 @@ module.exports = {
    * The first caller of `popInitialAction` will get the initial
    * action object, or `null`. Subsequent invocations will return null.
    */
-  popInitialAction: function() {
+  popInitialAction: function () {
     return ReactAppShortcuts.popInitialAction();
   },
 
   /**
    * Adds shortcut items to application
    */
-  setShortcutItems: function(items) {
-    ReactAppShortcuts.setShortcutItems(items);
+  setShortcutItems: function (items) {
+    ReactAppShortcuts.setShortcutItems(items, (errorMessage) => {
+      console.warn(errorMessage);
+    });
   },
 
   /**
    * Clears all previously set dynamic icons
    */
-  clearShortcutItems: function() {
+  clearShortcutItems: function () {
     ReactAppShortcuts.clearShortcutItems();
   },
 
   /**
    * Check if quick actions are supported
    */
-   isSupported: function(callback) {
-     ReactAppShortcuts.isSupported(callback);
-   }
+  isSupported: function (callback) {
+    ReactAppShortcuts.isSupported(callback);
+  },
 };

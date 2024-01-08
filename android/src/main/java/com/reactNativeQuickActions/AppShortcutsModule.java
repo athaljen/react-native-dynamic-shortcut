@@ -84,7 +84,7 @@ class AppShortcutsModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     @TargetApi(25)
-    public void setShortcutItems(ReadableArray items) {
+    public void setShortcutItems(ReadableArray items, Callback errorCallback) {
         if (!isShortcutSupported() || items.size() == 0) {
             return;
         }
@@ -96,6 +96,8 @@ class AppShortcutsModule extends ReactContextBaseJavaModule {
 
         Context context = getReactApplicationContext();
         List<ShortcutInfo> shortcuts = new ArrayList<>(items.size());
+        
+        String errorMessages = "";
 
         for (int i = 0; i < items.size(); i++) {
             ShortcutItem item = ShortcutItem.fromReadableMap(items.getMap(i));
@@ -111,9 +113,9 @@ class AppShortcutsModule extends ReactContextBaseJavaModule {
                 Bitmap bitmap = null;
 
                 try {
-                    bitmap = Picasso.get().load(imageUrl).get();
+                    bitmap = Picasso.get().load(imageUrl).resize(100, 100).centerCrop().get();
                 } catch (IOException e) {
-                    // e.printStackTrace();
+                    errorMessages += "Failed to load " + item.title + "image: " + e.getMessage() + "\n\n";
                 }
 
                 if(bitmap!=null){
@@ -138,6 +140,9 @@ class AppShortcutsModule extends ReactContextBaseJavaModule {
         }
 
         getReactApplicationContext().getSystemService(ShortcutManager.class).setDynamicShortcuts(shortcuts);
+        if (!errorMessages.isEmpty()) {
+           errorCallback.invoke(errorMessages);
+        }
     }
 
     @ReactMethod
