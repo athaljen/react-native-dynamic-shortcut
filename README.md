@@ -44,6 +44,15 @@ Add `import com.reactNativeQuickActions.AppShortcutsPackage;` to your `MainAppli
 Also add `new AppShortcutsPackage()` within the
 
 ```java
+protected List<ReactPackage> getPackages() {
+   @SuppressWarnings("UnnecessaryLocalVariable")
+   List<ReactPackage> packages = new PackageList(this).getPackages();
+  //  packages.add(new AppShortcutsPackage()); //like this
+   return packages;
+}
+
+//or
+
 public List<ReactPackage> createAdditionalReactPackages() {
   return Arrays.<ReactPackage>asList(
     ...
