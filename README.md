@@ -195,7 +195,7 @@ useEffect(() => {
         {
           type: "Profile",
           title: "Profile",
-          icon: "https://mountains.png", //(android only)
+          icon: "https://mountains.png", //(android only) ios support B/W images
           userInfo: { url: "dummy" },
         },
       ]);
