@@ -4,7 +4,7 @@ Support for the new 3D Touch home screen quick actions for your React Native app
 
 ### Credit @ [Jordan Byron](http://github.com/jordanbyron/)
 
-**This project currently supports iOS 9+ and Android 7**
+**This project currently supports iOS 9+ and Android 7+**
 
 ![](/assets/example.png)
 
@@ -98,7 +98,7 @@ DynamicShortcut.setShortcutItems([
     type: "Orders", // Required
     title: "See your orders", // Optional, if empty, `type` will be used instead
     subtitle: "See orders you've made",
-    icon: "Compose" or "https://image.png", // Note URL support in android only, Icons instructions below
+    icon: "Compose" or "https://image/order.png", // Note URL support in android only, Icons instructions below
     userInfo: {
       url: "app://orders" // Provide any custom data like deep linking URL
     }
@@ -140,7 +140,7 @@ Use `DeviceEventEmitter` to listen for `quickActionShortcut` messages when app i
 import { DeviceEventEmitter } from "react-native";
 
 DeviceEventEmitter.addListener("quickActionShortcut", (data) => {
-  console.log(data);
+  console.log(data, "background");
 });
 ```
 
@@ -151,10 +151,12 @@ import DynamicShortcut from "react-native-dynamic-shortcut";
 
 DynamicShortcut.popInitialAction()
   .then((item) => {
-    console.log(item, "app quit mode");
+    if (item) {
+      console.log(item, "quit mode");
+    }
   })
-  .catch((er) => {
-    console.log(console.error());
+  .catch((err) => {
+    console.log(err);
   });
 ```
 

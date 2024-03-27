@@ -10,5 +10,6 @@
   "license": "MIT",
   "devDependencies": {
     "react-native": "^0.40"
-  }
+  },
+  "homepage": "https://github.com/athaljen/react-native-dynamic-shortcut/#readme"
 }
