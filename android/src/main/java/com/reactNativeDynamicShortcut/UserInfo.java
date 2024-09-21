@@ -1,4 +1,4 @@
-package com.reactNativeQuickActions;
+package com.reactNativeDynamicShortcut;
 
 import android.os.PersistableBundle;
 

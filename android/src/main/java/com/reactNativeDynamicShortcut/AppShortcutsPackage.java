@@ -1,4 +1,4 @@
-package com.reactNativeQuickActions;
+package com.reactNativeDynamicShortcut;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;

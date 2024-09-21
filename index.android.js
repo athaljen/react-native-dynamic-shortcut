@@ -1,4 +1,4 @@
-var ReactAppShortcuts = require("react-native").NativeModules.ReactAppShortcuts;
+var RNDShortcut = require("react-native").NativeModules.RNDShortcut;
 
 module.exports = {
   /**
@@ -9,14 +9,14 @@ module.exports = {
    * action object, or `null`. Subsequent invocations will return null.
    */
   popInitialAction: function () {
-    return ReactAppShortcuts.popInitialAction();
+    return RNDShortcut.popInitialAction();
   },
 
   /**
    * Adds shortcut items to application
    */
   setShortcutItems: function (items) {
-    ReactAppShortcuts.setShortcutItems(items, (errorMessage) => {
+    RNDShortcut.setShortcutItems(items, (errorMessage) => {
       console.warn(errorMessage);
     });
   },
@@ -25,13 +25,13 @@ module.exports = {
    * Clears all previously set dynamic icons
    */
   clearShortcutItems: function () {
-    ReactAppShortcuts.clearShortcutItems();
+    RNDShortcut.clearShortcutItems();
   },
 
   /**
    * Check if quick actions are supported
    */
   isSupported: function (callback) {
-    ReactAppShortcuts.isSupported(callback);
+    RNDShortcut.isSupported(callback);
   },
 };

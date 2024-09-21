@@ -1,20 +1,13 @@
-//
-//  RNQuickAction.m
-//  RNQuickAction
-//
 //  Created by Athal Jen on 01/01/2024.
-//  Copyright © 2015 react-native. All rights reserved.
-//
-
 #import <React/RCTBridge.h>
 #import <React/RCTConvert.h>
 #import <React/RCTEventDispatcher.h>
 #import <React/RCTUtils.h>
-#import "RNQuickActionManager.h"
+#import "RNDShortcutManager.h"
 
 NSString *const RCTShortcutItemClicked = @"ShortcutItemClicked";
 
-NSDictionary *RNQuickAction(UIApplicationShortcutItem *item) {
+NSDictionary *RNDShortcut(UIApplicationShortcutItem *item) {
     if (!item) return nil;
     return @{
         @"type": item.type,
@@ -23,7 +16,7 @@ NSDictionary *RNQuickAction(UIApplicationShortcutItem *item) {
     };
 }
 
-@implementation RNQuickActionManager
+@implementation RNDShortcutManager
 {
     UIApplicationShortcutItem *_initialAction;
 }
@@ -144,27 +137,27 @@ RCT_EXPORT_METHOD(clearShortcutItems)
     [UIApplication sharedApplication].shortcutItems = nil;
 }
 
-+ (void)onQuickActionPress:(UIApplicationShortcutItem *) shortcutItem completionHandler:(void (^)(BOOL succeeded)) completionHandler
++ (void)onShortcutActionPress:(UIApplicationShortcutItem *) shortcutItem completionHandler:(void (^)(BOOL succeeded)) completionHandler
 {
-    RCTLogInfo(@"[RNQuickAction] Quick action shortcut item pressed: %@", [shortcutItem type]);
+    RCTLogInfo(@"[RNDShortcut] Quick action shortcut item pressed: %@", [shortcutItem type]);
 
     [[NSNotificationCenter defaultCenter] postNotificationName:RCTShortcutItemClicked
                                                         object:self
-                                                      userInfo:RNQuickAction(shortcutItem)];
+                                                      userInfo:RNDShortcut(shortcutItem)];
 
     completionHandler(YES);
 }
 
 - (void)handleQuickActionPress:(NSNotification *) notification
 {
-    [_bridge.eventDispatcher sendDeviceEventWithName:@"quickActionShortcut"
+    [_bridge.eventDispatcher sendDeviceEventWithName:@"RNDynamicShortcut"
                                                 body:notification.userInfo];
 }
 
 - (NSDictionary *)constantsToExport
 {
     return @{
-      @"initialAction": RCTNullIfNil(RNQuickAction(_initialAction))
+      @"initialAction": RCTNullIfNil(RNDShortcut(_initialAction))
     };
 }
 

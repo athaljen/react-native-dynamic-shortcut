@@ -12,7 +12,6 @@ Support for the new 3D Touch home screen quick actions for your React Native app
 
 ```bash
 $ yarn add react-native-dynamic-shortcut
-$ react-native link react-native-dynamic-shortcut
 ```
 
 ### Additional steps on iOS
@@ -20,12 +19,12 @@ $ react-native link react-native-dynamic-shortcut
 Add the following lines to your `AppDelegate.m` file:
 
 ```obj-c
-#import "RNQuickActionManager.h"
+#import "RNDShortcutManager.h"
 
 // @implementation AppDelegate
 
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL succeeded)) completionHandler {
-  [RNQuickActionManager onQuickActionPress:shortcutItem completionHandler:completionHandler];
+  [RNDShortcutManager onShortcutActionPress:shortcutItem completionHandler:completionHandler];
 }
 
 // @end
@@ -39,7 +38,7 @@ Add the following to `app/build.gradle` within the `dependencies { ... }` sectio
 implementation project(':react-native-dynamic-shortcut')
 ```
 
-Add `import com.reactNativeQuickActions.AppShortcutsPackage;` to your `MainApplication.java`
+Add `import com.reactNativeDynamicShortcut.AppShortcutsPackage;` to your `MainApplication.java`
 
 Also add `new AppShortcutsPackage()` within the
 
@@ -134,33 +133,33 @@ You can provide an image url to set the icon, make sure its a valid Url.
 First, you'll need to make sure `DeviceEventEmitter` is added to the list of
 requires for React Native.
 
-Use `DeviceEventEmitter` to listen for `quickActionShortcut` messages when app in background.
+Use `DeviceEventEmitter` to listen for `RNDynamicShortcut` messages when app in background.
 
 ```js
-import { DeviceEventEmitter } from "react-native";
+import {DeviceEventEmitter} from 'react-native';
 
-DeviceEventEmitter.addListener("quickActionShortcut", (data) => {
-  console.log(data, "background");
+DeviceEventEmitter.addListener('RNDynamicShortcut', data => {
+  console.log(data, 'background');
 });
 ```
 
 To get any actions sent when the app is cold-launched using the following code:
 
 ```js
-import DynamicShortcut from "react-native-dynamic-shortcut";
+import DynamicShortcut from 'react-native-dynamic-shortcut';
 
 DynamicShortcut.popInitialAction()
-  .then((item) => {
+  .then(item => {
     if (item) {
-      console.log(item, "quit mode");
+      console.log(item, 'quit mode');
     }
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(err);
   });
 ```
 
-Please note that on Android if android:launchMode is set to default value standard in AndroidManifest.xml, the app will be re-created each time when app is being brought back from background and it won't receive quickActionShortcut event from DeviceEventEmitter, instead popInitialAction will be receiving the app shortcut event.
+Please note that on Android if android:launchMode is set to default value standard in AndroidManifest.xml, the app will be re-created each time when app is being brought back from background and it won't receive RNDynamicShortcut event from DeviceEventEmitter, instead popInitialAction will be receiving the app shortcut event.
 
 ### Check if 3D Touch is supported
 
@@ -169,11 +168,11 @@ note this project currently only supports iOS 9+ which means this code will not
 work on iOS devices running versions < 9.0.
 
 ```js
-import DynamicShortcut from "react-native-dynamic-shortcut";
+import DynamicShortcut from 'react-native-dynamic-shortcut';
 
 DynamicShortcut.isSupported((error, supported) => {
   if (!supported) {
-    console.log("Device does not support 3D Touch or 3D Touch is disabled.");
+    console.log('Device does not support 3D Touch or 3D Touch is disabled.');
   }
 });
 ```
@@ -186,38 +185,38 @@ useEffect(() => {
     if (supported) {
       DynamicShortcut.setShortcutItems([
         {
-          type: "Profile",
-          title: "Profile",
-          icon: "logo",
-          userInfo: { url: "dummy" },
+          type: 'Profile',
+          title: 'Profile',
+          icon: 'logo',
+          userInfo: {url: 'dummy'},
         },
       ]);
 
       DynamicShortcut.setShortcutItems([
         {
-          type: "Profile",
-          title: "Profile",
-          icon: "https://mountains.png", //(android only) ios support B/W images
-          userInfo: { url: "dummy" },
+          type: 'Profile',
+          title: 'Profile',
+          icon: 'https://mountains.png', //(android only) ios support B/W images
+          userInfo: {url: 'dummy'},
         },
       ]);
     }
   });
 
-  DeviceEventEmitter.addListener("quickActionShortcut", (item) => {
-    console.log(item, "app in background");
+  DeviceEventEmitter.addListener('RNDynamicShortcut', item => {
+    console.log(item, 'app in background');
   });
 
   DynamicShortcut.popInitialAction()
-    .then((item) => {
-      console.log(item, "app quit mode");
+    .then(item => {
+      console.log(item, 'app quit mode');
     })
-    .catch((er) => {
+    .catch(er => {
       console.log(console.error());
     });
 
   return () => {
-    DeviceEventEmitter.removeAllListeners("quickActionShortcut");
+    DeviceEventEmitter.removeAllListeners('RNDynamicShortcut');
   };
 }, []);
 ```

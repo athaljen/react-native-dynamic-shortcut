@@ -1,4 +1,4 @@
-package com.reactNativeQuickActions;
+package com.reactNativeDynamicShortcut;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -30,7 +30,7 @@ import java.util.List;
 @ReactModule(name = AppShortcutsModule.REACT_NAME)
 class AppShortcutsModule extends ReactContextBaseJavaModule {
 
-    static final String REACT_NAME = "ReactAppShortcuts";
+    static final String REACT_NAME = "RNDShortcut";
 
     private static final String ACTION_SHORTCUT = "ACTION_SHORTCUT";
     private static final String SHORTCUT_ITEM = "SHORTCUT_ITEM";
@@ -179,7 +179,7 @@ class AppShortcutsModule extends ReactContextBaseJavaModule {
         if (item != null) {
             getReactApplicationContext()
                     .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                    .emit("quickActionShortcut", item.toWritableMap());
+                    .emit("RNDynamicShortcut", item.toWritableMap());
         }
     }
 }
