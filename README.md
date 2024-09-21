@@ -94,12 +94,12 @@ import DynamicShortcut from "react-native-dynamic-shortcut";
 
 DynamicShortcut.setShortcutItems([
   {
-    type: "Orders", // Required
-    title: "See your orders", // Optional, if empty, `type` will be used instead
-    subtitle: "See orders you've made",
-    icon: "Compose" or "https://image/order.png", // Note URL support in android only, Icons instructions below
+    type: "profile", // Required
+    title: "Profile", // Optional, if empty, `type` will be used instead
+    subtitle: "Profile details",
+    icon: "user" or "https://image/user.png", // Note URL support in android only, see Icons instructions below
     userInfo: {
-      url: "app://orders" // Provide any custom data like deep linking URL
+      url: "app://profile" // Provide any custom data like deep linking URL
     }
   }
 ]);
