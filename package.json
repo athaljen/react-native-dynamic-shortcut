@@ -1,6 +1,6 @@
 {
   "name": "react-native-dynamic-shortcut",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "A react-native interface for Touch 3D home screen quick actions shortcut",
   "repository": {
     "type": "git",
