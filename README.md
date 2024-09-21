@@ -2,8 +2,6 @@
 
 Support for the new 3D Touch home screen quick actions for your React Native apps!
 
-### Credit @ [Jordan Byron](http://github.com/jordanbyron/)
-
 **This project currently supports iOS 9+ and Android 7+**
 
 ![](/assets/example.png)
@@ -46,7 +44,7 @@ Also add `new AppShortcutsPackage()` within the
 protected List<ReactPackage> getPackages() {
    @SuppressWarnings("UnnecessaryLocalVariable")
    List<ReactPackage> packages = new PackageList(this).getPackages();
-  //  packages.add(new AppShortcutsPackage()); //like this
+    packages.add(new AppShortcutsPackage())//liek this
    return packages;
 }
 
@@ -60,6 +58,8 @@ public List<ReactPackage> createAdditionalReactPackages() {
 ```
 
 section of `MainApplication.java`
+
+#### [Example App](https://github.com/athaljen/dynamic-shortcut-example)
 
 ## Usage
 
@@ -136,25 +136,25 @@ requires for React Native.
 Use `DeviceEventEmitter` to listen for `RNDynamicShortcut` messages when app in background.
 
 ```js
-import {DeviceEventEmitter} from 'react-native';
+import { DeviceEventEmitter } from "react-native";
 
-DeviceEventEmitter.addListener('RNDynamicShortcut', data => {
-  console.log(data, 'background');
+DeviceEventEmitter.addListener("RNDynamicShortcut", (data) => {
+  console.log(data, "background");
 });
 ```
 
 To get any actions sent when the app is cold-launched using the following code:
 
 ```js
-import DynamicShortcut from 'react-native-dynamic-shortcut';
+import DynamicShortcut from "react-native-dynamic-shortcut";
 
 DynamicShortcut.popInitialAction()
-  .then(item => {
+  .then((item) => {
     if (item) {
-      console.log(item, 'quit mode');
+      console.log(item, "quit mode");
     }
   })
-  .catch(err => {
+  .catch((err) => {
     console.log(err);
   });
 ```
@@ -168,11 +168,11 @@ note this project currently only supports iOS 9+ which means this code will not
 work on iOS devices running versions < 9.0.
 
 ```js
-import DynamicShortcut from 'react-native-dynamic-shortcut';
+import DynamicShortcut from "react-native-dynamic-shortcut";
 
 DynamicShortcut.isSupported((error, supported) => {
   if (!supported) {
-    console.log('Device does not support 3D Touch or 3D Touch is disabled.');
+    console.log("Device does not support 3D Touch or 3D Touch is disabled.");
   }
 });
 ```
@@ -185,41 +185,43 @@ useEffect(() => {
     if (supported) {
       DynamicShortcut.setShortcutItems([
         {
-          type: 'Profile',
-          title: 'Profile',
-          icon: 'logo',
-          userInfo: {url: 'dummy'},
+          type: "Profile",
+          title: "Profile",
+          icon: "logo",
+          userInfo: { url: "dummy" },
         },
       ]);
 
       DynamicShortcut.setShortcutItems([
         {
-          type: 'Profile',
-          title: 'Profile',
-          icon: 'https://mountains.png', //(android only) ios support B/W images
-          userInfo: {url: 'dummy'},
+          type: "Profile",
+          title: "Profile",
+          icon: "https://mountains.png", //(android only) ios support B/W images
+          userInfo: { url: "dummy" },
         },
       ]);
     }
   });
 
-  DeviceEventEmitter.addListener('RNDynamicShortcut', item => {
-    console.log(item, 'app in background');
+  DeviceEventEmitter.addListener("RNDynamicShortcut", (item) => {
+    console.log(item, "app in background");
   });
 
   DynamicShortcut.popInitialAction()
-    .then(item => {
-      console.log(item, 'app quit mode');
+    .then((item) => {
+      console.log(item, "app quit mode");
     })
-    .catch(er => {
+    .catch((er) => {
       console.log(console.error());
     });
 
   return () => {
-    DeviceEventEmitter.removeAllListeners('RNDynamicShortcut');
+    DeviceEventEmitter.removeAllListeners("RNDynamicShortcut");
   };
 }, []);
 ```
+
+### Credit @ [Jordan Byron](http://github.com/jordanbyron/)
 
 ## License
 
