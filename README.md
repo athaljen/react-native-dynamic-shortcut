@@ -59,7 +59,7 @@ public List<ReactPackage> createAdditionalReactPackages() {
 
 section of `MainApplication.java`
 
-#### [Example App](https://github.com/athaljen/dynamic-shortcut-example)
+### See the [Example App](https://github.com/athaljen/dynamic-shortcut-example) for using it with react-navigation.
 
 ## Usage
 
